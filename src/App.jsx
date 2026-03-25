@@ -1,32 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Search,
-  MapPin,
-  Wind,
-  Droplets,
   Sun,
   Cloud,
   CloudRain,
   CloudLightning,
-  Thermometer,
-  Navigation,
-  Eye,
-  Sunrise,
-  Sunset,
-  MoreHorizontal,
-  ChevronRight,
-  Calendar
 } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import HourlyForecast from './components/HourlyForecast';
 import SevenDayForecast from './components/SevenDayForecast';
 import SunAndAirCard from './components/SunAndAirCard';
+import Footer from './components/Footer';
+import axios from 'axios';
+import { fetchWeatherInfo } from './utils/fetchData';
 
 const App = () => {
   const [activeWeather, setActiveWeather] = useState('rainy');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('Bhopal');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
+  const [cityDetails, setCityDetails] = useState({name: "Bhopal"})
+  const [weatherInfo, setWeatherInfo] = useState()
+
+  const getCoordinates = async () => {
+    let res = await axios.get(`https://geocoding-api.open-meteo.com/v1/search?name=${searchQuery}`)
+    setCityDetails(res.data.results[0])
+  }
+  useEffect(() => {
+    setIsLoading(true)
+    getCoordinates()
+  }, [searchQuery])
+
+  let fetchData = async() => {
+    const data = await fetchWeatherInfo(cityDetails,setIsLoading)
+    if (data) {
+      setWeatherInfo(data);
+      setActiveWeather(data.current.theme);
+    }
+  }
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetchData()
+  }, [cityDetails])
 
   // Trigger entry animation
   useEffect(() => {
@@ -60,16 +76,6 @@ const App = () => {
 
   const currentTheme = weatherThemes[activeWeather];
 
-  const hourlyData = [
-    { time: '12 PM', temp: 28, icon: <Sun size={20} /> },
-    { time: '1 PM', temp: 29, icon: <Sun size={20} /> },
-    { time: '2 PM', temp: 30, icon: <Sun size={20} /> },
-    { time: '3 PM', temp: 29, icon: <Cloud size={20} /> },
-    { time: '4 PM', temp: 27, icon: <CloudRain size={20} /> },
-    { time: '5 PM', temp: 26, icon: <CloudRain size={20} /> },
-    { time: '6 PM', temp: 24, icon: <Cloud size={20} /> },
-    { time: '7 PM', temp: 22, icon: <Sun size={20} /> },
-  ];
 
   const dailyForecast = [
     { day: 'Monday', high: 30, low: 22, condition: 'Sunny', icon: <Sun size={24} className="text-yellow-200" /> },
@@ -82,57 +88,49 @@ const App = () => {
   ];
 
   return (
-    <div className={`min-h-screen w-full transition-all duration-1000 ease-in-out ${currentTheme.bg} text-white font-sans p-4 md:p-8 flex flex-col items-center overflow-x-hidden`}>
+    <>
+      {isLoading ? (
+        <div className="flex h-screen w-full items-center justify-center bg-slate-900 text-white">
+          <h1 className="text-2xl animate-pulse font-bold">Fetching Weather Details...</h1>
+        </div>
+      ) : (
+        <div className={`min-h-screen w-full transition-all duration-1000 ease-in-out ${currentTheme.bg} text-white font-sans p-4 md:p-8 flex flex-col items-center overflow-x-hidden`}>
 
-      {/* Search Header */}
-      <Header
-        activeWeather={activeWeather}
-        setActiveWeather={setActiveWeather}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        isLoaded={isLoaded}
-      />
-
-      <main className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-        {/* Left Column: Hero & Hourly */}
-        <div className="lg:col-span-2 space-y-8">
-
-          {/* Hero Card */}
-          <Hero
-            currentTheme={currentTheme}
+          <Header
+            activeWeather={activeWeather}
+            setActiveWeather={setActiveWeather}
+            cityDetails={cityDetails}
+            setSearchQuery={setSearchQuery}
             isLoaded={isLoaded}
           />
 
-          {/* Hourly Forecast */}
-          <HourlyForecast
-          hourlyData={hourlyData}
-          isLoaded={isLoaded}
-          />
+          <main className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-8">
+              <Hero
+                currentTheme={currentTheme}
+                isLoaded={isLoaded}
+                weatherInfo={weatherInfo}
+                />
+              <HourlyForecast
+                hourlyData={weatherInfo.hourly}
+                isLoaded={isLoaded}
+              />
+            </div>
+
+            <div className="space-y-8">
+              <SevenDayForecast
+                isLoaded={isLoaded}
+                currentTheme={currentTheme}
+                dailyForecast={dailyForecast}
+              />
+              <SunAndAirCard isLoaded={isLoaded} />
+            </div>
+          </main>
+
+          <Footer />
         </div>
-
-        {/* Right Column: 7-Day Forecast & Misc */}
-        <div className="space-y-8">
-
-          {/* 7-Day Forecast Card */}
-          
-          <SevenDayForecast
-          isLoaded={isLoaded}
-          currentTheme={currentTheme}
-          dailyForecast={dailyForecast}
-          />
-
-          {/* Sun & Air Card */}
-          <SunAndAirCard isLoaded={isLoaded}/>
-          
-        </div>
-      </main>
-
-      {/* Footer / Branding */}
-      <footer className="mt-16 pb-8 text-center text-white/40 text-[10px] uppercase tracking-widest font-bold">
-        <p>© 2026 SkyCast • Designed for Clarity</p>
-      </footer>
-    </div>
+      )}
+    </>
   );
 };
 

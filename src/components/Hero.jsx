@@ -1,6 +1,7 @@
 import { Wind, Droplets, Navigation, Eye } from "lucide-react"
 
-const Hero = ({currentTheme,isLoaded}) => {
+const Hero = ({currentTheme,isLoaded,weatherInfo}) => {
+    
     return (
         <section className={`relative overflow-hidden rounded-[2.5rem] p-8 md:p-12 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-2xl transition-all duration-1000 delay-100 transform ${isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
             <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
@@ -12,19 +13,19 @@ const Hero = ({currentTheme,isLoaded}) => {
                         </span>
                         Live Updates
                     </div>
-                    <h2 className="text-8xl md:text-9xl font-black tracking-tighter drop-shadow-2xl">
-                        28<span className="text-5xl align-top mt-4 inline-block">°C</span>
+                    <h2 className="text-6xl md:text-7xl font-black tracking-tighter drop-shadow-2xl">
+                        {weatherInfo.current.temp}<span className="text-5xl align-top mt-4 inline-block">°C</span>  
                     </h2>
                     <div className="flex items-center justify-center md:justify-start gap-4">
-                        <span className="text-2xl font-medium opacity-90">Mostly Sunny</span>
+                        <span className="text-2xl font-medium opacity-90">Mostly {weatherInfo.current.theme}</span>
                         <div className="h-6 w-px bg-white/30"></div>
-                        <span className="text-lg opacity-70">H: 30° L: 22°</span>
+                        <span className="text-lg opacity-70">H: {weatherInfo.current.high}° L: {weatherInfo.current.low}°</span>
                     </div>
                 </div>
                 <div className="flex flex-col items-center">
                     {currentTheme.icon}
                     <div className="mt-4 px-6 py-2 rounded-2xl bg-white/10 border border-white/10 text-sm font-medium backdrop-blur-sm">
-                        Feels like 31°C
+                        Feels like {weatherInfo.current.feelsLike}°C
                     </div>
                 </div>
             </div>
@@ -32,10 +33,10 @@ const Hero = ({currentTheme,isLoaded}) => {
             {/* Weather Detail Pills */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
                 {[
-                    { label: 'Wind', value: '12 km/h', icon: <Wind size={18} /> },
-                    { label: 'Humidity', value: '45%', icon: <Droplets size={18} /> },
-                    { label: 'Pressure', value: '1012 hPa', icon: <Navigation size={18} className="rotate-45" /> },
-                    { label: 'Visibility', value: '10 km', icon: <Eye size={18} /> },
+                    { label: 'Wind', value: `${weatherInfo.current.wind} km/h`, icon: <Wind size={18} /> },
+                    { label: 'Humidity', value: `${weatherInfo.current.humidity} %`, icon: <Droplets size={18} /> },
+                    { label: 'Pressure', value: `${weatherInfo.current.pressure} hPa`, icon: <Navigation size={18} className="rotate-45" /> },
+                    { label: 'Visibility', value: `${weatherInfo.current.visibility} km`, icon: <Eye size={18} /> },
                 ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 bg-white/5 p-4 rounded-2xl hover:bg-white/20 transition-all cursor-default border border-transparent hover:border-white/10">
                         <div className="p-2 bg-white/10 rounded-lg">{item.icon}</div>
