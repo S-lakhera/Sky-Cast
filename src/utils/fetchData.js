@@ -8,14 +8,14 @@ const getWeatherStatus = (code) => {
     return { status: 'Sunny', theme: 'sunny' };
 };
 
-export const fetchWeatherInfo = async (location, setIsLoading) => {
+export const fetchWeatherInfo = async (location) => {
     // Location check
     if (!location || !location.latitude || !location.longitude) return null;
 
     try {
-        let response = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,surface_pressure,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`);
+        const response = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,surface_pressure,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`);
 
-        let apiData = response.data;
+        const apiData = response.data;
 
         const formattedData = {
             current: {
@@ -63,7 +63,5 @@ export const fetchWeatherInfo = async (location, setIsLoading) => {
     } catch (error) {
         console.error("API Fetch Error:", error);
         return null;
-    } finally {
-        setIsLoading(false); 
     }
 };

@@ -1,7 +1,12 @@
 import React from 'react'
 import { MoreHorizontal, Sunrise, Sunset } from 'lucide-react'
+import { useWeather } from '../context/WeatherContext';
 
-const SunAndAirCard = ({isLoaded}) => {
+const SunAndAirCard = () => {
+  const {weatherInfo,isLoaded} = useWeather()
+  const sun = weatherInfo.sunAndAir;
+  console.log(sun);
+  
   return (
     <section className={`rounded-4xl p-6 bg-black/20 backdrop-blur-2xl border border-white/10 transition-all duration-1000 delay-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <div className="flex justify-between items-start mb-6">
@@ -22,14 +27,14 @@ const SunAndAirCard = ({isLoaded}) => {
                 <Sunrise className="text-yellow-200" size={24} />
                 <div>
                   <p className="text-[10px] uppercase opacity-40 font-bold">Sunrise</p>
-                  <p className="text-sm font-semibold">06:12 AM</p>
+                  <p className="text-sm font-semibold">{sun.sunrise}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Sunset className="text-orange-300" size={24} />
                 <div>
                   <p className="text-[10px] uppercase opacity-40 font-bold">Sunset</p>
-                  <p className="text-sm font-semibold">07:44 PM</p>
+                  <p className="text-sm font-semibold">{sun.sunset}</p>
                 </div>
               </div>
             </div>

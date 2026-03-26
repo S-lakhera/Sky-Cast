@@ -1,7 +1,13 @@
 import React from 'react'
 import { Calendar } from 'lucide-react'
+import { useWeather } from '../context/WeatherContext'
+import { getWeatherIcon } from '../utils/getWeatherIcon'
 
-const SevenDayForecast = ({currentTheme, dailyForecast, isLoaded}) => {
+const SevenDayForecast = () => {
+  const {currentTheme, weatherInfo, isLoaded} = useWeather()
+  const dailyForecast = weatherInfo.daily
+  console.log(dailyForecast);
+  
   return (
     <section className={`rounded-[2.5rem] p-8 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-xl transition-all duration-1000 delay-500 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
             <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
@@ -14,7 +20,7 @@ const SevenDayForecast = ({currentTheme, dailyForecast, isLoaded}) => {
                   <span className="w-20 font-medium text-white/80 group-hover:text-white transition-colors">{day.day.slice(0, 3)}</span>
                   <div className="flex items-center gap-4 flex-1 justify-center">
                     <div className="group-hover:scale-110 transition-transform">
-                      {day.icon}
+                      {getWeatherIcon(day.theme,22)}
                     </div>
                     <span className="hidden md:block text-[10px] text-white/40 uppercase tracking-widest font-bold">{day.condition}</span>
                   </div>

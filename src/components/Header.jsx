@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { MapPin, Search } from 'lucide-react'
+import { useWeather } from '../context/WeatherContext';
 
-const Header = ({setActiveWeather,cityDetails,setSearchQuery,isLoaded,activeWeather}) => {
-    let [cityName, setCityName] = useState("");
+const Header = () => {
+    const { activeWeather, setActiveWeather, cityDetails, setSearchQuery, isLoaded } = useWeather();
+    const [cityName, setCityName] = useState("");
 
     const currentDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',    // "Monday"
@@ -24,7 +26,7 @@ const Header = ({setActiveWeather,cityDetails,setSearchQuery,isLoaded,activeWeat
                 </div>
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight">{cityDetails.name}</h1>
-                    <p className="text-sm opacity-70">{cityDetails.admin1}, {cityDetails.country}</p>
+                    <p className="text-sm opacity-70">{cityDetails.admin1 ? cityDetails.admin1+", " :""} {cityDetails.country}</p>
                     <p className="text-sm opacity-70">{currentDate}</p>
                 </div>
             </div>

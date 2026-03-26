@@ -1,6 +1,8 @@
 import { Wind, Droplets, Navigation, Eye } from "lucide-react"
+import { useWeather } from "../context/WeatherContext"
 
-const Hero = ({currentTheme,isLoaded,weatherInfo}) => {
+const Hero = () => {
+    const {currentTheme,isLoaded,weatherInfo} = useWeather()
     
     return (
         <section className={`relative overflow-hidden rounded-[2.5rem] p-8 md:p-12 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-2xl transition-all duration-1000 delay-100 transform ${isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
