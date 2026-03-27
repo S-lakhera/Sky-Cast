@@ -7,7 +7,7 @@ const SunAndAirCard = () => {
   const sun = weatherInfo.sunAndAir;
   
   return (
-    <section className={`rounded-4xl p-6 bg-black/20 backdrop-blur-2xl border border-white/10 transition-all duration-1000 delay-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+    <section className={`rounded-4xl p-5 md:p-6 bg-black/20 backdrop-blur-2xl border border-white/10 transition-all duration-1000 delay-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <div className="flex justify-between items-start mb-6">
               <div>
                 <p className="text-[10px] uppercase tracking-widest opacity-60 mb-1 font-bold">Air Quality</p>

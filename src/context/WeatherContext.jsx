@@ -54,7 +54,7 @@ export const WeatherProvider = ({ children }) => {
                     
                     setRecentSearches(prev => {
                         const filtered = prev.filter(item => item.name !== newSearch.name);
-                        const updated = [newSearch, ...filtered].slice(0, 5);
+                        const updated = [newSearch, ...filtered].slice(0, 6);
                         localStorage.setItem('recentSearches', JSON.stringify(updated));
                         return updated;
                     });

@@ -4,9 +4,10 @@ import { getWeatherIcon } from "../utils/getWeatherIcon"
 
 const Hero = () => {
     const {currentTheme,isLoaded,weatherInfo} = useWeather()
+    console.log(currentTheme);
     
     return (
-        <section className={`relative overflow-hidden rounded-[2.5rem] p-6 md:p-8 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-2xl transition-all duration-1000 delay-100 transform ${isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
+        <section className={` relative overflow-hidden rounded-[2.5rem] p-6 md:p-10.5 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-2xl transition-all duration-800 delay-100 transform ${isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
             <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
                 <div className="space-y-4">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-sm font-medium">

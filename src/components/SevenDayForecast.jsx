@@ -8,7 +8,7 @@ const SevenDayForecast = () => {
   const dailyForecast = weatherInfo.daily
   
   return (
-    <section className={`rounded-[2.5rem] px-8 py-4 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-xl transition-all duration-1000 delay-500 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
+    <section className={`rounded-[2.5rem] p-5 md:p-8 md:py-6 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-xl transition-all duration-1000 delay-500 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
             <h3 className="text-xl font-bold mb-5 flex items-center gap-2">
               <Calendar size={20} className="text-white/60" />
               7-Day Forecast
