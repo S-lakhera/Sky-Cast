@@ -12,13 +12,31 @@ export const fetchWeatherInfo = async (location) => {
     // Location check
     if (!location || !location.latitude || !location.longitude) return null;
 
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,surface_pressure,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`
-
-
     try {
-        const response = await axios.get(url);
+        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,surface_pressure,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto`
 
-        const apiData = response.data;
+        const aqiUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${location.latitude}&longitude=${location.longitude}&current=us_aqi`;
+
+        const [weatherRes, aqiRes] = await Promise.all([
+            axios.get(weatherUrl),
+            axios.get(aqiUrl)
+        ]);
+        const apiData = weatherRes.data;
+        const aqiData = aqiRes.data;
+
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hour = String(now.getHours()).padStart(2, '0');
+
+        const localHourStr = `${year}-${month}-${day}T${hour}:00`;
+        let startIndex = apiData.hourly.time.findIndex(t => t === localHourStr);
+
+        if (startIndex === -1) {
+            startIndex = apiData.hourly.time.findIndex(t => new Date(t) >= now);
+        }
+        if (startIndex === -1) startIndex = 0;
 
         const formattedData = {
             current: {
@@ -33,13 +51,13 @@ export const fetchWeatherInfo = async (location) => {
                 pressure: apiData.current.surface_pressure,
                 visibility: apiData.current.visibility || 10,
             },
-            hourly: apiData.hourly.time.slice(0, 8).map((time, index) => ({
+            hourly: apiData.hourly.time.slice(startIndex+1, startIndex + 9).map((time, index) => ({
                 time: new Date(time).toLocaleTimeString('en-US', {
                     hour: 'numeric',
                     hour12: true
                 }),
-                temp: Math.round(apiData.hourly.temperature_2m[index]),
-                theme: getWeatherStatus(apiData.hourly.weather_code[index]).theme
+                temp: Math.round(apiData.hourly.temperature_2m[startIndex + index]),
+                theme: getWeatherStatus(apiData.hourly.weather_code[startIndex + index]).theme
             })),
             daily: apiData.daily.time.map((date, index) => ({
                 day: new Date(date).toLocaleDateString('en-US', { weekday: 'short' }),
@@ -57,11 +75,11 @@ export const fetchWeatherInfo = async (location) => {
                     hour: '2-digit',
                     minute: '2-digit'
                 }),
-                aqi: 24
+                aqi: aqiData.current.us_aqi // REAL AQI HERE!
             }
         };
 
-        return formattedData; 
+        return formattedData;
 
     } catch (error) {
         console.error("API Fetch Error:", error);

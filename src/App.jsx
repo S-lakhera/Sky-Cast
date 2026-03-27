@@ -16,7 +16,7 @@ const App = () => {
   return (
     <>
       {(
-        <div className={`min-h-screen w-full transition-all duration-1000 ease-in-out ${currentTheme.bg} text-white font-sans p-3 md:px-8 flex flex-col items-center overflow-x-hidden`}>
+        <div className={`min-h-screen w-full transition-all duration-1000 ease-in-out ${currentTheme.bg} ${currentTheme.accent} font-sans p-3 md:px-8 flex flex-col items-center overflow-x-hidden`}>
 
           <Header />
           <RecentSearches />
@@ -31,7 +31,7 @@ const App = () => {
               </div>
             )
               : weatherInfo ? (
-                <main className="w-full max-w-[1400px] 2xl:max-w-[1800px] min-[2500px]:max-w-[2400px] grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <main className="w-full max-w-350 2xl:max-w-450 min-[2500px]:max-w-600 grid grid-cols-1 lg:grid-cols-3 gap-8">
                   <div className="lg:col-span-2 space-y-8">
                     <Hero />
                     <HourlyForecast />
