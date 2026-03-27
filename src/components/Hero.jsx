@@ -1,11 +1,12 @@
 import { Wind, Droplets, Navigation, Eye } from "lucide-react"
-import { useWeather } from "../context/WeatherContext"
+import { useWeather } from "../context/useWeather"
+import { getWeatherIcon } from "../utils/getWeatherIcon"
 
 const Hero = () => {
     const {currentTheme,isLoaded,weatherInfo} = useWeather()
     
     return (
-        <section className={`relative overflow-hidden rounded-[2.5rem] p-8 md:p-12 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-2xl transition-all duration-1000 delay-100 transform ${isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
+        <section className={`relative overflow-hidden rounded-[2.5rem] p-6 md:p-8 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-2xl transition-all duration-1000 delay-100 transform ${isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
             <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
                 <div className="space-y-4">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-sm font-medium">
@@ -24,8 +25,8 @@ const Hero = () => {
                         <span className="text-lg opacity-70">H: {weatherInfo.current.high}° L: {weatherInfo.current.low}°</span>
                     </div>
                 </div>
-                <div className="flex flex-col items-center">
-                    {currentTheme.icon}
+                <div className="flex flex-col items-center justify-end">
+                    {getWeatherIcon(weatherInfo.current.theme,24,"w-20 h-20 text-yellow-200 animate-bounce") }
                     <div className="mt-4 px-6 py-2 rounded-2xl bg-white/10 border border-white/10 text-sm font-medium backdrop-blur-sm">
                         Feels like {weatherInfo.current.feelsLike}°C
                     </div>

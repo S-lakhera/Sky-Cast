@@ -1,20 +1,19 @@
 import React from 'react'
 import { Calendar } from 'lucide-react'
-import { useWeather } from '../context/WeatherContext'
+import { useWeather } from '../context/useWeather'
 import { getWeatherIcon } from '../utils/getWeatherIcon'
 
 const SevenDayForecast = () => {
   const {currentTheme, weatherInfo, isLoaded} = useWeather()
   const dailyForecast = weatherInfo.daily
-  console.log(dailyForecast);
   
   return (
-    <section className={`rounded-[2.5rem] p-8 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-xl transition-all duration-1000 delay-500 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
-            <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
+    <section className={`rounded-[2.5rem] px-8 py-4 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-xl transition-all duration-1000 delay-500 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
+            <h3 className="text-xl font-bold mb-5 flex items-center gap-2">
               <Calendar size={20} className="text-white/60" />
               7-Day Forecast
             </h3>
-            <div className="space-y-6">
+            <div className="space-y-4.5">
               {dailyForecast.map((day, i) => (
                 <div key={i} className="flex items-center justify-between group cursor-pointer">
                   <span className="w-20 font-medium text-white/80 group-hover:text-white transition-colors">{day.day.slice(0, 3)}</span>
@@ -31,9 +30,9 @@ const SevenDayForecast = () => {
                 </div>
               ))}
             </div>
-            <button className="w-full mt-8 py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-bold text-sm transition-all border border-white/5">
+            {/* <button className="w-full mt-8 py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-bold text-sm transition-all border border-white/5">
               Full 15-day Forecast
-            </button>
+            </button> */}
           </section>
   )
 }

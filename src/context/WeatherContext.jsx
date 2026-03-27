@@ -1,21 +1,26 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import weatherThemes from "../utils/theme";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { fetchWeatherInfo } from "../utils/fetchData";
 
-const WeatherContext = createContext()
+export const WeatherContext = createContext()
 
 export const WeatherProvider = ({ children }) => {
-    const [activeWeather, setActiveWeather] = useState('rainy');
+    const [activeWeather, setActiveWeather] = useState(() => localStorage.getItem('themePreference') || 'night');
     const [searchQuery, setSearchQuery] = useState('Bhopal');
     const [cityDetails, setCityDetails] = useState({ name: "Bhopal" })
     const [isLoaded, setIsLoaded] = useState(false);
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
     const [weatherInfo, setWeatherInfo] = useState()
+    const [recentSearches, setRecentSearches] = useState(() => JSON.parse(localStorage.getItem('recentSearches')) || []);
 
     const currentTheme = weatherThemes[activeWeather]
+
+    useEffect(() => {
+        localStorage.setItem('themePreference', activeWeather);
+    }, [activeWeather]);
 
     // Trigger entry animation
     useEffect(() => {
@@ -37,7 +42,22 @@ export const WeatherProvider = ({ children }) => {
                 const data = await fetchWeatherInfo(city);
                 if (data) {
                     setWeatherInfo(data);
-                    setActiveWeather(data.current.theme);
+                    
+                    const newSearch = {
+                        name: city.name,
+                        admin1: city.admin1,
+                        country: city.country,
+                        temp: data.current.temp,
+                        theme: data.current.theme,
+                        timestamp: Date.now()
+                    };
+                    
+                    setRecentSearches(prev => {
+                        const filtered = prev.filter(item => item.name !== newSearch.name);
+                        const updated = [newSearch, ...filtered].slice(0, 5);
+                        localStorage.setItem('recentSearches', JSON.stringify(updated));
+                        return updated;
+                    });
                 } else {
                     setError("Failed to fetch weather forecast.");
                 }
@@ -56,11 +76,10 @@ export const WeatherProvider = ({ children }) => {
         <WeatherContext.Provider value={{
             weatherInfo, cityDetails, searchQuery, setSearchQuery,
             activeWeather, setActiveWeather, currentTheme,
-            isLoading, isLoaded, error, setError
+            isLoading, isLoaded, error, setError,
+            recentSearches, setRecentSearches
         }}>
             {children}
         </WeatherContext.Provider>
     )
 }
-
-export const useWeather = () => useContext(WeatherContext)

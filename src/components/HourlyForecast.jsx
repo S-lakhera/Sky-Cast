@@ -1,6 +1,6 @@
 import React from 'react'
 import { Cloud, CloudRain, Navigation, Sun } from 'lucide-react'
-import { useWeather } from '../context/WeatherContext'
+import { useWeather } from '../context/useWeather'
 import { getWeatherIcon } from '../utils/getWeatherIcon'
 
 const HourlyForecast = () => {

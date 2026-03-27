@@ -5,7 +5,8 @@ import HourlyForecast from './components/HourlyForecast';
 import SevenDayForecast from './components/SevenDayForecast';
 import SunAndAirCard from './components/SunAndAirCard';
 import Footer from './components/Footer';
-import { useWeather } from './context/WeatherContext';
+import RecentSearches from './components/RecentSearches';
+import { useWeather } from './context/useWeather';
 import Loading from './components/Loading';
 
 const App = () => {
@@ -15,11 +16,12 @@ const App = () => {
   return (
     <>
       {isLoading ? (
-        <Loading/>
+        <Loading />
       ) : (
-        <div className={`min-h-screen w-full transition-all duration-1000 ease-in-out ${currentTheme.bg} text-white font-sans p-4 md:p-8 flex flex-col items-center overflow-x-hidden`}>
+        <div className={`min-h-screen w-full transition-all duration-1000 ease-in-out ${currentTheme.bg} text-white font-sans p-3 md:px-8 flex flex-col items-center overflow-x-hidden`}>
 
           <Header />
+          <RecentSearches />
 
           {error ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center mt-20 fade-in">

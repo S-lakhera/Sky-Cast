@@ -1,11 +1,10 @@
 import React from 'react'
 import { MoreHorizontal, Sunrise, Sunset } from 'lucide-react'
-import { useWeather } from '../context/WeatherContext';
+import { useWeather } from '../context/useWeather';
 
 const SunAndAirCard = () => {
   const {weatherInfo,isLoaded} = useWeather()
   const sun = weatherInfo.sunAndAir;
-  console.log(sun);
   
   return (
     <section className={`rounded-4xl p-6 bg-black/20 backdrop-blur-2xl border border-white/10 transition-all duration-1000 delay-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
