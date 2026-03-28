@@ -33,13 +33,13 @@ const Header = () => {
         <header className={`w-full max-w-[1400px] 2xl:max-w-[1800px] min-[2500px]:max-w-[2400px] flex flex-col md:flex-row justify-between items-center gap-4 mb-1 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
             <div className="flex w-full md:w-auto items-center justify-between">
                 <div className="flex items-center gap-2 group cursor-pointer">
-                    <div className=" p-2 rounded-xl backdrop-blur-md group-hover:scale-110 transition-transform">
-                        <MapPin className="" size={28} />
+                    <div className=" md:p-2 rounded-xl backdrop-blur-md group-hover:scale-110 transition-transform">
+                        <MapPin className="" size={26} />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">{cityDetails?.name},
-                            <span className="text-[14px] opacity-70 font-normal"> {cityDetails?.admin1 ? cityDetails?.admin1 + ", " : ""} {cityDetails?.country}</span></h1>
-                        <p className="text-sm opacity-70">{currentDate}</p>
+                        <h1 className="md:text-2xl xl:text-3xl font-bold tracking-tight">{cityDetails?.name},
+                            <span className="text-[12px] md:text-[14px] opacity-70 font-normal"> {cityDetails?.admin1 ? cityDetails?.admin1 + ", " : ""} {cityDetails?.country}</span></h1>
+                        <p className="text-xs md:text-sm opacity-70">{currentDate}</p>
                     </div>
                 </div>
 
@@ -57,7 +57,7 @@ const Header = () => {
                 </div>
             </div>
 
-            <div className='flex gap-3 items-center'>
+            <div className='flex gap-3 items-center w-full md:w-auto  px-1'>
                 <div className="relative w-full md:w-60 h-11 group flex gap-3 ">
                     <input
                         ref={inputRef}

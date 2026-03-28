@@ -26,10 +26,10 @@ button{
   position: absolute;
   inset: 0 0 -100%;
   background: 
-    radial-gradient(farthest-side,#ffdc15 80%,#0000) left 70% top    20%/15px 15px,
-    radial-gradient(farthest-side,#000000 92%,#0000) left 65% bottom 19%/16px 16px,
-    radial-gradient(farthest-side,#88c0ff 92%,#0000) left 70% bottom 20%/15px 15px,
-    linear-gradient( rgba(255, 166, 0, 0.621) 50%,#000000 0);
+  radial-gradient(farthest-side,#93c5fd 92%,#0000) left 70% bottom 20%/15px 15px,
+  radial-gradient(farthest-side,#FFC300 80%,#0000) left 70% top    20%/15px 15px,
+  radial-gradient(farthest-side,#111015 92%,#0000) left 65% bottom 19%/12px 12px,
+    linear-gradient(#FF8C00 50%,#111015 0);
   background-repeat: no-repeat;
   animation: l5 2s infinite;
 }

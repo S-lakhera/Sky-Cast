@@ -16,10 +16,10 @@ const RecentSearches = () => {
                     <div 
                         key={idx}
                         onClick={() => setSearchQuery(search.name)}
-                        className={`min-w-40 p-3 pt-1 rounded-2xl cursor-pointer backdrop-blur-md transition-all duration-250 hover:scale-105 border border-white/10 ${currentTheme.card}`}
+                        className={`min-w-30 md:min-w-40 p-2 md:p-3 pt-1 rounded-2xl cursor-pointer backdrop-blur-md transition-all duration-250 hover:scale-105 border border-white/10 ${currentTheme.card}`}
                     >
                         <div className='w-full'>
-                            <div className='w-full flex justify-center items-center uppercase text-sm font-bold p-1'>
+                            <div className='w-full flex justify-center items-center uppercase text-sm font-bold md:p-1'>
                             <h3>
                                 {search.aqi} Aqi
                             </h3>
@@ -29,7 +29,7 @@ const RecentSearches = () => {
                             <p className="text-xs opacity-70 truncate">{search.country}</p>
                             {getWeatherIcon(search.theme,20)}
                         </div>
-                        <h4 className="font-bold text-md flex justify-between items-center">
+                        <h4 className="md:font-bold md:text-base font-semibold text-sm flex justify-between items-center">
                             {search.name} <span className="text-sm font-semibold">{Math.round(search.temp)}°C</span>
                         </h4>
                         {/* <p>24 AQI</p> */}

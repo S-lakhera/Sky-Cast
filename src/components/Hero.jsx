@@ -13,7 +13,8 @@ const Hero = () => {
         <section className={` relative overflow-hidden rounded-[2.5rem] p-8 md:px-8 ${currentTheme.card}  backdrop-blur-3xl border border-white/20 shadow-2xl transition-all duration-800 delay-100 transform ${isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
             
             {/* Day Selector Tabs */}
-            <div className="flex gap-2 mb-8 bg-white/10 p-1 rounded-2xl w-fit backdrop-blur-md border border-white/5">
+           <div className="w-full justify-center md:justify-start flex">
+             <div className="flex gap-2 mb-8 bg-white/10 p-1 rounded-2xl w-fit backdrop-blur-md border border-white/5">
                 {['yesterday', 'today', 'tomorrow'].map((day) => (
                     <button
                         key={day}
@@ -28,6 +29,7 @@ const Hero = () => {
                     </button>
                 ))}
             </div>
+           </div>
 
             <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
                 <div className="space-y-4">
