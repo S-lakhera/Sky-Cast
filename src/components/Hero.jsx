@@ -22,7 +22,7 @@ const Hero = () => {
                         className={`px-4 py-1.5 rounded-xl text-xs font-bold capitalize transition-all duration-300 ${
                             selectedDay === day 
                             ? 'bg-white text-gray-900 shadow-lg scale-105' 
-                            : 'text-white/70 hover:bg-white/5'
+                            : 'text-white/85 hover:bg-white/5'
                         }`}
                     >
                         {day}

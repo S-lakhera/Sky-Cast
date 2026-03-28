@@ -3,11 +3,11 @@ import { Sunrise, Sunset } from 'lucide-react'
 import { useWeather } from '../context/useWeather';
 
 const SunAndAirCard = () => {
-  const { weatherInfo, isLoaded, currentTheme } = useWeather()
+  const { weatherInfo, currentTheme } = useWeather()
   const sun = weatherInfo.sunAndAir;
 
   return (
-    <section className={`rounded-4xl p-5 md:p-6  backdrop-blur-2xl border ${currentTheme.card} border-white/10 transition-all duration-1000 delay-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+    <section className={`rounded-4xl p-5 md:p-6  backdrop-blur-2xl border ${currentTheme.card} border-white/10 transition-all duration-1000 delay-700 transform `}>
       <div className="flex justify-between items-center mb-6">
         <p className="text-md uppercase tracking-widest opacity-60  font-bold">Air Quality</p>
         <p className="text-md font-bold">{sun.aqi <= 50? `Good - ${sun.aqi}`:sun.aqi <= 100 ? `Moderate - ${sun.aqi}` :`Unhealthy - ${sun.aqi}`} AQI</p>
