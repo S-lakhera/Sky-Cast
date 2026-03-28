@@ -1,5 +1,5 @@
 import React from 'react'
-import { MoreHorizontal, Sunrise, Sunset } from 'lucide-react'
+import { Sunrise, Sunset } from 'lucide-react'
 import { useWeather } from '../context/useWeather';
 
 const SunAndAirCard = () => {

@@ -8,12 +8,12 @@ const SevenDayForecast = () => {
   const dailyForecast = weatherInfo.daily
   
   return (
-    <section className={`rounded-[2.5rem] p-5 md:p-8 md:py-6 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-xl transition-all duration-1000 delay-500 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
+    <section className={`rounded-[2.5rem] p-5 md:p-12 md:py-7.5 ${currentTheme.card} backdrop-blur-3xl border border-white/20 shadow-xl transition-all duration-1000 delay-500 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
             <h3 className="text-xl font-bold mb-5 flex items-center gap-2">
               <Calendar size={20} className="/60" />
               7-Day Forecast
             </h3>
-            <div className="space-y-4.5">
+            <div className="space-y-6">
               {dailyForecast.map((day, i) => (
                 <div key={i} className="flex items-center justify-between group cursor-pointer">
                   <span className="w-20 font-medium /80 group-hover: transition-colors">{day.day.slice(0, 3)}</span>

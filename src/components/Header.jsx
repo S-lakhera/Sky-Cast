@@ -5,6 +5,7 @@ import { getThemeIcon } from '../utils/getWeatherIcon';
 
 const Header = () => {
     const { activeWeather, setActiveWeather, cityDetails, setSearchQuery, isLoaded,  } = useWeather();
+    
     const [cityName, setCityName] = useState("");
     const inputRef = useRef(null);
 
@@ -36,8 +37,8 @@ const Header = () => {
                         <MapPin className="" size={28} />
                     </div>
                     <div>
-                        <h1 className="text-xl font-bold tracking-tight">{cityDetails.name},
-                            <span className="text-[14px] opacity-70 font-normal"> {cityDetails.admin1 ? cityDetails.admin1 + ", " : ""} {cityDetails.country}</span></h1>
+                        <h1 className="text-3xl font-bold tracking-tight">{cityDetails?.name},
+                            <span className="text-[14px] opacity-70 font-normal"> {cityDetails?.admin1 ? cityDetails?.admin1 + ", " : ""} {cityDetails?.country}</span></h1>
                         <p className="text-sm opacity-70">{currentDate}</p>
                     </div>
                 </div>
@@ -56,8 +57,8 @@ const Header = () => {
                 </div>
             </div>
 
-            <div className='flex gap-1 items-center'>
-                <div className="relative w-full md:w-55 h-11 group flex gap-3 ">
+            <div className='flex gap-3 items-center'>
+                <div className="relative w-full md:w-60 h-11 group flex gap-3 ">
                     <input
                         ref={inputRef}
                         type="text"
