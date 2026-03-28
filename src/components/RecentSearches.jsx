@@ -11,7 +11,7 @@ const RecentSearches = () => {
     return (
         <div className="w-full max-w-[1400px] 2xl:max-w-7xl min-[2500px]:max-w-[2400px] my-2.5 flex flex-col gap-3 fade-in">
             
-            <div className="flex gap-3 overflow-x-hidden pb-2 scrollbar-hide">
+            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide no-scrollbar">
                 {recentSearches.map((search, idx) => (
                     <div 
                         key={idx}

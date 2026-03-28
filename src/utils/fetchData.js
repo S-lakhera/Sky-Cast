@@ -72,7 +72,7 @@ export const fetchWeatherInfo = async (location) => {
                     theme: getWeatherStatus(apiData.daily.weather_code[2]).theme,
                 }
             },
-            hourly: apiData.hourly.time.slice(startIndex+1, startIndex + 9).map((time, index) => ({
+            hourly: apiData.hourly.time.slice(startIndex+1, startIndex + 13).map((time, index) => ({
                 time: new Date(time).toLocaleTimeString('en-US', {
                     hour: 'numeric',
                     hour12: true
